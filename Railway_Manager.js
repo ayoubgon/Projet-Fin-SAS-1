@@ -1,19 +1,5 @@
 var prompt = require('prompt-sync')();
 
-//         id: 1,
-//         departure: "Safi",
-//         destination: "Youssoufia",
-//         departureTime: "07:30",
-//         arrivalTime: "08:30",
-//         price: 25,
-//         availableSeats: 50
-
-// {
-//     id: 1,
-//     passengerName: "Ahmed",
-//     tripId: 3,
-//     seatNumber: 1,
-//    price: 90
 let id_counter = 1;
 
 const tickets = [];
