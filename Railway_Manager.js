@@ -198,7 +198,24 @@ const trips = [
         availableSeats: 50
     }
 ];
-function Afficher_les_rajets(obje){
+
+function add_name(){
+    for(;;){
+        let name = prompt("Nom du passager : ")
+        if (name.length !== 0)
+            return name
+    }
+}
+function number(){
+    for(;;){
+        let id = Number(prompt("Identifiant du trajet : "))
+        if (id <= 20 && id >= 1){
+            return id 
+        }
+    }
+}
+
+function Afficher_les_trajets(obje){
     console.log("=== TRAJETS DISPONIBLES ===");
     for(let i = 0 ;i < obje.length ;i++){
         console.log("#",obje[i].id,obje[i].departure ,"→",obje[i].destination )
@@ -267,7 +284,7 @@ function Acheter_un_ticket(){
     obje.seatNumber =  git_seatNumber(trips,id_t)
     obje.price = git_price(trips, id_t)
     tickets.push(obje);
-    // console.log(tickets);
+    console.log(tickets);
 }
 function Afficher_les_tickets(ticket){
     for(let i = 0 ;i < ticket.length;i++){
@@ -298,13 +315,13 @@ function main() {
         n = Number(prompt("Votre choix :"))
         switch (n) {
             case 1:
-                Afficher_les_rajets(trips)
+                Afficher_les_trajets(trips)
                 break;
             case 2:
                 Acheter_un_ticket()
                 break;
             case 3:
-                console.log(tickets)
+                // console.log(tickets)
                 Afficher_les_tickets(tickets)
                 break;
             case 4:
@@ -320,7 +337,7 @@ function main() {
                 
                 break;
             default:
-                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 6");
+                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 7");
                 break;
         }
     } while (n!=0)
