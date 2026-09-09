@@ -248,17 +248,6 @@ function Afficher_les_trajets(obje){
 
     
 }
-/*function git_ticket_id(){        
-    if (tickets.length == 0)
-        return 1
-    let j = 1;
-    for (let i = 0 ;i < tickets.length; j++,i++){
-        if (tickets[i].id != j)
-            return j
-    }
-    return j
-
-}*/
 function git_seatNumber(obje,id){
     let seatNum = 0
     for(let i = 0 ; i < obje.length ; i++){
@@ -286,6 +275,24 @@ function cheackseat(id_check){
     }
     return false
 }
+function  Afficher_un_ticket(ticket ,i_of_tick){
+    
+        console.log("===============================");
+        console.log("Ticket #",ticket[i_of_tick].id);
+        console.log("Passager : ",ticket[i_of_tick].passengerName);
+        console.log("Trajet :",ticket[i_of_tick].trajet);
+        console.log("Place : ",ticket[i_of_tick].seatNumber);
+        console.log("Prix : ",ticket[i_of_tick].price);
+        console.log("===============================");
+
+}
+function add_Trajet(id){
+    for(let i = 0 ;i < trips.length;i++)
+        if (trips[i].id == id){
+            return trips[i].departure + " → " + trips[i].destination
+        }
+}
+
 function Acheter_un_ticket(){
     let obje = {};
     let name;
@@ -297,20 +304,16 @@ function Acheter_un_ticket(){
     obje.id = id_counter++
     obje.passengerName = name
     obje.tripId = id_t
+    obje.trajet = add_Trajet(id_t)
     obje.seatNumber =  git_seatNumber(trips,id_t)
     obje.price = git_price(trips, id_t)
     tickets.push(obje);
+    Afficher_un_ticket(tickets , tickets.length - 1)
 }
+
 function Afficher_les_tickets(ticket){
     for(let i = 0 ;i < ticket.length;i++){
-        console.log("===============================");
-        console.log("id: ",ticket[i].id);
-        console.log("passengerName: ",ticket[i].passengerName);
-        console.log("tripId: ",ticket[i].tripId);
-        console.log("seatNumber: ",ticket[i].seatNumber);
-        console.log("price: ",ticket[i].price);
-        console.log("===============================");
-
+        Afficher_un_ticket(ticket ,i)
     }
 }
 function Annuler_un_ticket(tick){
@@ -318,13 +321,7 @@ function Annuler_un_ticket(tick){
         let id_del = input_ticket_id()
         for(let i = 0 ;i<tick.length;i++){
             if (tick[i].id == id_del){
-                console.log("===============================");
-                console.log("id: ",tick[i].id);
-                console.log("passengerName: ",tick[i].passengerName);
-                console.log("tripId: ",tick[i].tripId);
-                console.log("seatNumber: ",tick[i].seatNumber);
-                console.log("price: ",tick[i].price);
-                console.log("===============================");
+                Afficher_un_ticket(tick,i)
                 tick.splice(i, 1)
                 return
             }
@@ -336,15 +333,12 @@ function Rechercher_un_ticket(tick){
     let name_ser = add_name()
     for(let i = 0 ; i <tick.length ; i++){
         if (tick[i].passengerName == name_ser){
-            console.log("===============================");
-            console.log("id: ",tick[i].id);
-            console.log("passengerName: ",tick[i].passengerName);
-            console.log("tripId: ",tick[i].tripId);
-            console.log("seatNumber: ",tick[i].seatNumber);
-            console.log("price: ",tick[i].price);
-            console.log("===============================")
+            Afficher_un_ticket(tick,i)
         }
     }
+}
+function Filtrer_les_trajets(){
+
 }
 function main() {
     let n;
@@ -384,7 +378,7 @@ function main() {
                 Rechercher_un_ticket(tickets)
                 break;
             case 6: 
-            
+                Filtrer_les_trajets()
                 break;
             case 7:
                 
@@ -397,3 +391,4 @@ function main() {
 }
 
 main()
+// add_Trajet(2)
