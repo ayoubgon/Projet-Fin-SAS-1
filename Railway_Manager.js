@@ -241,12 +241,7 @@ function Afficher_les_trajets(obje){
         console.log("prix : ",obje[i].price)
         console.log("Places disponibles : ",obje[i].availableSeats)
         console.log("==========================");
-
     }
-    
-
-
-    
 }
 function git_seatNumber(obje,id){
     let seatNum = 0
@@ -276,15 +271,13 @@ function cheackseat(id_check){
     return false
 }
 function  Afficher_un_ticket(ticket ,i_of_tick){
-    
-        console.log("===============================");
-        console.log("Ticket #",ticket[i_of_tick].id);
-        console.log("Passager : ",ticket[i_of_tick].passengerName);
-        console.log("Trajet :",ticket[i_of_tick].trajet);
-        console.log("Place : ",ticket[i_of_tick].seatNumber);
-        console.log("Prix : ",ticket[i_of_tick].price);
-        console.log("===============================");
-
+    console.log("===============================");
+    console.log("Ticket #",ticket[i_of_tick].id);
+    console.log("Passager : ",ticket[i_of_tick].passengerName);
+    console.log("Trajet :",ticket[i_of_tick].trajet);
+    console.log("Place : ",ticket[i_of_tick].seatNumber);
+    console.log("Prix : ",ticket[i_of_tick].price);
+    console.log("===============================");
 }
 function add_Trajet(id){
     for(let i = 0 ;i < trips.length;i++)
@@ -292,7 +285,6 @@ function add_Trajet(id){
             return trips[i].departure + " → " + trips[i].destination
         }
 }
-
 function Acheter_un_ticket(){
     let obje = {};
     let name;
@@ -310,7 +302,6 @@ function Acheter_un_ticket(){
     tickets.push(obje);
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
-
 function Afficher_les_tickets(ticket){
     for(let i = 0 ;i < ticket.length;i++){
         Afficher_un_ticket(ticket ,i)
@@ -337,9 +328,27 @@ function Rechercher_un_ticket(tick){
         }
     }
 }
-function Filtrer_les_trajets(){
-
+function Filtrer_les_trajets(trip){
+    let depar = add_name()
+    console.log (depar)
+    for(let i = 0 ;i< trip.length ;i++){
+        if (trip[i].departure == depar)
+            console.log(trip[i].departure ," → ",trip[i].destination ,":", trip[i].price,"DH")            
+    }
 }
+function swap(arr,i, j){
+    let a = arr[i];
+    arr[i] = arr[j];
+    arr[j] = a;
+}
+function Trier_les_trajets(traj){
+    for (let j = 0 ;j < traj.length;j++){
+        for(let i = 0 ;i < traj.length - 1 ;i++)
+            if (traj[i].price > traj[i + 1].price)
+                swap(traj ,i ,i + 1)
+    }
+}
+
 function main() {
     let n;
     do {
@@ -366,10 +375,7 @@ function main() {
                 Acheter_un_ticket()
                 break;
             case 3:
-                // console.log(tickets)
                 Afficher_les_tickets(tickets)
-                // console.log(tickets)
-
                 break;
             case 4:
                 Annuler_un_ticket(tickets)
@@ -378,10 +384,11 @@ function main() {
                 Rechercher_un_ticket(tickets)
                 break;
             case 6: 
-                Filtrer_les_trajets()
+                Filtrer_les_trajets(trips)
                 break;
             case 7:
-                
+                Trier_les_trajets(trips)
+                Afficher_les_trajets(trips)
                 break;
             default:
                 console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 7");
