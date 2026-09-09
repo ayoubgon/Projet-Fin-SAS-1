@@ -1,4 +1,5 @@
 var prompt = require('prompt-sync')();
+
 //         id: 1,
 //         departure: "Safi",
 //         destination: "Youssoufia",
@@ -13,6 +14,7 @@ var prompt = require('prompt-sync')();
 //     tripId: 3,
 //     seatNumber: 1,
 //    price: 90
+let id_counter = 1;
 
 const tickets = [];
 
@@ -206,7 +208,7 @@ function add_name(){
             return name
     }
 }
-function number(){
+function id_trip(){
     for(;;){
         let id = Number(prompt("Identifiant du trajet : "))
         if (id <= 20 && id >= 1){
@@ -214,7 +216,6 @@ function number(){
         }
     }
 }
-
 function Afficher_les_trajets(obje){
     console.log("=== TRAJETS DISPONIBLES ===");
     for(let i = 0 ;i < obje.length ;i++){
@@ -231,14 +232,17 @@ function Afficher_les_trajets(obje){
 
     
 }
-function git_ticket_id(){        
-    if (tickets.length = 0)
+/*function git_ticket_id(){        
+    if (tickets.length == 0)
         return 1
-    for (let i = 0,j = 1 ;i < tickets.length; j++,i++){
+    let j = 1;
+    for (let i = 0 ;i < tickets.length; j++,i++){
         if (tickets[i].id != j)
             return j
     }
-}
+    return j
+
+}*/
 function git_seatNumber(obje,id){
     let seatNum = 0
     for(let i = 0 ; i < obje.length ; i++){
@@ -270,21 +274,16 @@ function Acheter_un_ticket(){
     let obje = {};
     let name;
     let id_t;
-    do{
-        name = prompt("Nom du passager : ")
-    }while(name.length < 0)
-    do{
-        id_t = Number(prompt("Identifiant du trajet : "))    
-    }while (id_t >= 20 && id_t < 0)
+    name = add_name()
+    id_t = id_trip()
     if(cheackseat(id_t))
-        return console.log("trane complet")
-    obje.id = git_ticket_id(tickets)
+        return console.log("train complet")
+    obje.id = id_counter++
     obje.passengerName = name
     obje.tripId = id_t
     obje.seatNumber =  git_seatNumber(trips,id_t)
     obje.price = git_price(trips, id_t)
     tickets.push(obje);
-    console.log(tickets);
 }
 function Afficher_les_tickets(ticket){
     for(let i = 0 ;i < ticket.length;i++){
@@ -318,11 +317,14 @@ function main() {
                 Afficher_les_trajets(trips)
                 break;
             case 2:
+                console.log(tickets)
                 Acheter_un_ticket()
                 break;
             case 3:
+                console.log(tickets)
+                Afficher_les_tickets()
                 // console.log(tickets)
-                Afficher_les_tickets(tickets)
+
                 break;
             case 4:
                 
@@ -344,4 +346,3 @@ function main() {
 }
 
 main()
-// Afficher_les_rajets(trips)
