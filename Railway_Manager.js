@@ -334,6 +334,12 @@ function Trier_les_trajets(traj){
                 swap(traj ,i ,i + 1)
     }
 }
+function affaires_total(tick){
+    let = total;
+    for(let i = 0;i<tick.length;i++)
+        total += tick[i].price
+    return total
+}
 
 function main() {
     let n;
@@ -348,6 +354,8 @@ function main() {
         console.log("5. Rechercher un ticket");
         console.log("6. Filtrer les trajets");
         console.log("7. Trier les trajets");
+        console.log("8. Nombre total de tickets vendus");
+        console.log("9. Chiffre d'affaires total");
         console.log("0. Quitter");
         console.log("===============================");
 
@@ -376,8 +384,14 @@ function main() {
                 Trier_les_trajets(trips)
                 Afficher_les_trajets(trips)
                 break;
+            case 8:
+                console.log(tickets.length)
+            break
+            case 9:
+                affaires_total()
+                break
             default:
-                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 7");
+                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 9");
                 break;
         }
     } while (n!=0)
