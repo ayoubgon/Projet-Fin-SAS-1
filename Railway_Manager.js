@@ -2,6 +2,8 @@ var prompt = require('prompt-sync')();
 
 let id_counter = 1;
 
+const del_tick = []
+
 const tickets = [];
 
 const trips = [
@@ -186,7 +188,17 @@ const trips = [
         availableSeats: 50
     }
 ];
-
+function del_tick_from_del_tick(set,id){
+    for(let i = 0;i < del_tick.length;i++)
+        if (del_tick[i].id == id && del_tick[i].setplace == set )
+            del_tick.splice(i,1)
+}
+function check_del_seat(id){
+    for(let i = 0;i < del_tick.length;i++)
+        if (del_tick[i].id == id)
+            return del_tick[i].setplace
+    return true
+}
 function add_name(){
     for(;;){
         let name = prompt("Nom du passager : ")
@@ -279,13 +291,25 @@ function Acheter_un_ticket(){
     id_t = id_trip()
     if(cheackseat(id_t))
         return console.log("train complet")
-    obje.id = id_counter++
-    obje.passengerName = name
-    obje.tripId = id_t
-    obje.trajet = add_Trajet(id_t)
-    obje.seatNumber =  git_seatNumber(trips,id_t)
-    obje.price = git_price(trips, id_t)
-    tickets.push(obje);
+    if (check_del_seat(id_t) == true){
+        obje.id = id_counter++
+        obje.passengerName = name
+        obje.tripId = id_t
+        obje.trajet = add_Trajet(id_t)
+        obje.seatNumber =  git_seatNumber(trips,id_t)
+        obje.price = git_price(trips, id_t)
+        tickets.push(obje);
+    }
+    else{
+        obje.id = id_counter++
+        obje.passengerName = name
+        obje.tripId = id_t
+        obje.trajet = add_Trajet(id_t)
+        obje.seatNumber = check_del_seat(id_t)
+        del_tick_from_del_tick(obje.seatNumber,id_t)
+        obje.price = git_price(trips, id_t)
+        tickets.push(obje); 
+    }
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
 function Afficher_les_tickets(ticket){
@@ -294,12 +318,21 @@ function Afficher_les_tickets(ticket){
     }
 }
 function Annuler_un_ticket(tick){
+    let del_ti = {};
     for(;;){
         let id_del = input_ticket_id()
         for(let i = 0 ;i<tick.length;i++){
             if (tick[i].id == id_del){
-                Afficher_un_ticket(tick,i)
+                Afficher_un_ticket(tick,i);
+                del_ti.id = tick[i].tripId
+                del_ti.setplace = tick[i].seatNumber
+                del_tick.push(del_ti)
                 tick.splice(i, 1)
+                for(let j = 0 ;i < trips.length;i++){
+                    if(trips.id == del_ti.id)
+                        trips.availableSeats += 1
+                }
+                console.log(del_tick);
                 return
             }
         console.log("ticket n'existe pas");
@@ -398,4 +431,3 @@ function main() {
 }
 
 main()
-// add_Trajet(2)
