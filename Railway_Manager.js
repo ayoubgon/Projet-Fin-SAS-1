@@ -179,6 +179,7 @@ const trips = [
         availableSeats: 50
     },
     {
+     
         id: 20,
         departure: "Agadir",
         destination: "Safi",
@@ -186,6 +187,7 @@ const trips = [
         arrivalTime: "22:00",
         price: 95,
         availableSeats: 50
+
     }
 ];
 function del_tick_from_del_tick(set,id){
@@ -195,8 +197,13 @@ function del_tick_from_del_tick(set,id){
 }
 function check_del_seat(id){
     for(let i = 0;i < del_tick.length;i++)
-        if (del_tick[i].id == id)
+        if (del_tick[i].id == id){
+            for(let j = 0 ; j < trips.length ; j++){
+                if(trips[j].id == id)
+                    trips[j].availableSeats += 1
+            }
             return del_tick[i].setplace
+        }
     return true
 }
 function add_name(){
@@ -291,25 +298,18 @@ function Acheter_un_ticket(){
     id_t = id_trip()
     if(cheackseat(id_t))
         return console.log("train complet")
-    if (check_del_seat(id_t) == true){
         obje.id = id_counter++
         obje.passengerName = name
         obje.tripId = id_t
         obje.trajet = add_Trajet(id_t)
-        obje.seatNumber =  git_seatNumber(trips,id_t)
+        if (check_del_seat(id_t) == true)
+            obje.seatNumber =  git_seatNumber(trips,id_t)
+        else{
+            obje.seatNumber = check_del_seat(id_t)
+            del_tick_from_del_tick(obje.seatNumber,id_t)
+        }
         obje.price = git_price(trips, id_t)
         tickets.push(obje);
-    }
-    else{
-        obje.id = id_counter++
-        obje.passengerName = name
-        obje.tripId = id_t
-        obje.trajet = add_Trajet(id_t)
-        obje.seatNumber = check_del_seat(id_t)
-        del_tick_from_del_tick(obje.seatNumber,id_t)
-        obje.price = git_price(trips, id_t)
-        tickets.push(obje); 
-    }
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
 function Afficher_les_tickets(ticket){
@@ -328,9 +328,9 @@ function Annuler_un_ticket(tick){
                 del_ti.setplace = tick[i].seatNumber
                 del_tick.push(del_ti)
                 tick.splice(i, 1)
-                for(let j = 0 ;i < trips.length;i++){
-                    if(trips.id == del_ti.id)
-                        trips.availableSeats += 1
+                for(let j = 0 ;j < trips.length;j++){
+                    if(trips[j].id == del_ti.id)
+                        trips[j].availableSeats += 1
                 }
                 console.log(del_tick);
                 return
@@ -368,10 +368,10 @@ function Trier_les_trajets(traj){
     }
 }
 function affaires_total(tick){
-    let = total;
+    let = total = 0;
     for(let i = 0;i<tick.length;i++)
         total += tick[i].price
-    return total
+    console.log(total)
 }
 
 function main() {
@@ -398,7 +398,6 @@ function main() {
                 Afficher_les_trajets(trips)
                 break;
             case 2:
-                // console.log(tickets)
                 Acheter_un_ticket()
                 break;
             case 3:
@@ -419,9 +418,9 @@ function main() {
                 break;
             case 8:
                 console.log(tickets.length)
-            break
+                break
             case 9:
-                affaires_total()
+                affaires_total(tickets)
                 break
             default:
                 console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 9");
