@@ -209,7 +209,9 @@ function check_del_seat(id){
 function add_name(){
     for(;;){
         let name = prompt("Nom du passager : ")
-        if (name.length !== 0)
+        if (name.length <= 0)
+            console.log("tapez le nom correct")
+        else if (name.length !== 0)
             return name
     }
 }
@@ -223,7 +225,7 @@ function id_trip(){
 }
 function input_ticket_id(){
     for(;;){
-        let id = Number(prompt("Identifiant du trajet : "))
+        let id = Number(prompt("Identifiant du ticket : "))
         if (id <= 1000 && id >= 1){
             return id 
         }
@@ -275,7 +277,7 @@ function cheackseat(id_check){
     }
     return false
 }
-function  Afficher_un_ticket(ticket ,i_of_tick){
+function Afficher_un_ticket(ticket ,i_of_tick){
     console.log("===============================");
     console.log("Ticket #",ticket[i_of_tick].id);
     console.log("Passager : ",ticket[i_of_tick].passengerName);
@@ -296,29 +298,46 @@ function Acheter_un_ticket(){
     let id_t;
     name = add_name()
     id_t = id_trip()
-    if(cheackseat(id_t))
-        return console.log("train complet")
-        obje.id = id_counter++
-        obje.passengerName = name
-        obje.tripId = id_t
-        obje.trajet = add_Trajet(id_t)
-        if (check_del_seat(id_t) == true)
-            obje.seatNumber =  git_seatNumber(trips,id_t)
-        else{
-            obje.seatNumber = check_del_seat(id_t)
-            del_tick_from_del_tick(obje.seatNumber,id_t)
-        }
-        obje.price = git_price(trips, id_t)
-        tickets.push(obje);
+    if(cheackseat(id_t)){
+        console.log("\n===============================");
+        console.log("========{train complet}========")
+        console.log("===============================\n");
+        return 
+    }
+    obje.id = id_counter++
+    obje.passengerName = name
+    obje.tripId = id_t
+    obje.trajet = add_Trajet(id_t)
+    if (check_del_seat(id_t) == true)
+        obje.seatNumber =  git_seatNumber(trips,id_t)
+    else{
+        obje.seatNumber = check_del_seat(id_t)
+        del_tick_from_del_tick(obje.seatNumber,id_t)
+    }
+    obje.price = git_price(trips, id_t)
+    tickets.push(obje);
+    console.log("\n===============================");
+    console.log("===Ticket acheté avec succès===");
+    console.log("===============================\n");
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
 function Afficher_les_tickets(ticket){
-    for(let i = 0 ;i < ticket.length;i++){
-        Afficher_un_ticket(ticket ,i)
+    if (ticket.length == 0){
+        console.log("\n===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================\n");
     }
+    for(let i = 0 ;i < ticket.length;i++)
+        Afficher_un_ticket(ticket ,i)
 }
 function Annuler_un_ticket(tick){
     let del_ti = {};
+    if(tick.length <= 0 ){
+        console.log("===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================");
+        return
+    }
     for(;;){
         let id_del = input_ticket_id()
         for(let i = 0 ;i<tick.length;i++){
@@ -332,20 +351,30 @@ function Annuler_un_ticket(tick){
                     if(trips[j].id == del_ti.id)
                         trips[j].availableSeats += 1
                 }
-                console.log(del_tick);
                 return
             }
-        console.log("ticket n'existe pas");
-    }
+        console.log("===============================");
+        console.log("====={ticket n'existe pas}=====");
+        console.log("===============================");
+        }
     }
 }
 function Rechercher_un_ticket(tick){
+    if(tick.length <= 0 ){
+        console.log("===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================");
+        return
+    }
     let name_ser = add_name()
     for(let i = 0 ; i <tick.length ; i++){
         if (tick[i].passengerName == name_ser){
             Afficher_un_ticket(tick,i)
         }
     }
+    console.log("===============================");
+    console.log("====={ticket n'existe pas}=====");
+    console.log("===============================");
 }
 function Filtrer_les_trajets(trip){
     let depar = add_name()
@@ -373,6 +402,33 @@ function affaires_total(tick){
         total += tick[i].price
     console.log(total)
 }
+function Trajet_le_plus_vendu(){
+    if(tickets.length <= 0 ){
+        console.log("===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================");
+        return
+    }
+    let max = {};
+    let counter = 0;
+    for(let i = 0 ; i < trips.length ;i++){
+        counter = 0;
+        for(let j = 0;j < tickets.length;j++){
+            if (trips[i].id == tickets[j].tripId)
+                counter++;
+        }
+        if (max.number < counter){
+            max.number = counter 
+            max.index = trips[i].departure ,"→",trips[i].destination
+            console.log(trips[i].departure ,"→",trips[i].destination)
+            console.log(max.number = counter );
+            
+        }
+    }
+    console.log(max.index)
+    console.log(max.number ," tickets vendus")
+
+}
 
 function main() {
     let n;
@@ -389,6 +445,8 @@ function main() {
         console.log("7. Trier les trajets");
         console.log("8. Nombre total de tickets vendus");
         console.log("9. Chiffre d'affaires total");
+        console.log("10. Trajet le plus vendu");
+
         console.log("0. Quitter");
         console.log("===============================");
 
@@ -421,6 +479,9 @@ function main() {
                 break
             case 9:
                 affaires_total(tickets)
+                break
+            case 10:
+                Trajet_le_plus_vendu()
                 break
             default:
                 console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 9");
