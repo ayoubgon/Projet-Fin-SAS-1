@@ -256,17 +256,6 @@ function id_trip(){
         }
     }
 }
-function Afficher_les_trajets(obje){
-    console.log("=== TRAJETS DISPONIBLES ===");
-    for(let i = 0 ;i < obje.length ;i++){
-        console.log("#",obje[i].id,obje[i].departure ,"→",obje[i].destination )
-        console.log("Départ : ",obje[i].departureTime)
-        console.log("Arrivée : ",obje[i].arrivalTime)
-        console.log("prix : ",obje[i].price)
-        console.log("Places disponibles : ",obje[i].availableSeats)
-        console.log("==========================");
-    }
-}
 function git_seatNumber(obje,id){
     let seatNum = 0
     for(let i = 0 ; i < obje.length ; i++){
@@ -294,6 +283,43 @@ function cheackseat(id_check){
     }
     return false
 }
+function add_Trajet(id){
+    for(let i = 0 ;i < trips.length;i++)
+        if (trips[i].id == id){
+            return trips[i].departure + " → " + trips[i].destination
+        }
+}
+function Afficher_les_tickets(ticket){
+    if (ticket.length == 0){
+        console.log("\n===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================\n");
+    }
+    else{
+        for(let i = 0 ;i < ticket.length;i++)
+            Afficher_un_ticket(ticket ,i)    
+    }
+    
+}
+function swap(arr,i, j){
+    let a = arr[i];
+    arr[i] = arr[j];
+    arr[j] = a;
+}
+// =======================================================================
+// Afficher les trajets
+function Afficher_les_trajets(obje){
+    console.log("=== TRAJETS DISPONIBLES ===");
+    for(let i = 0 ;i < obje.length ;i++){
+        console.log("#",obje[i].id,obje[i].departure ,"→",obje[i].destination )
+        console.log("Départ : ",obje[i].departureTime)
+        console.log("Arrivée : ",obje[i].arrivalTime)
+        console.log("prix : ",obje[i].price)
+        console.log("Places disponibles : ",obje[i].availableSeats)
+        console.log("==========================");
+    }
+}
+// Afficher les tickets
 function Afficher_un_ticket(ticket ,i_of_tick){
     console.log("===============================");
     console.log("Ticket #",ticket[i_of_tick].id);
@@ -303,12 +329,7 @@ function Afficher_un_ticket(ticket ,i_of_tick){
     console.log("Prix : ",ticket[i_of_tick].price);
     console.log("===============================");
 }
-function add_Trajet(id){
-    for(let i = 0 ;i < trips.length;i++)
-        if (trips[i].id == id){
-            return trips[i].departure + " → " + trips[i].destination
-        }
-}
+// Acheter un ticket
 function Acheter_un_ticket(){
     let obje = {};
     let name;
@@ -338,18 +359,7 @@ function Acheter_un_ticket(){
     console.log("===============================\n");
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
-function Afficher_les_tickets(ticket){
-    if (ticket.length == 0){
-        console.log("\n===============================");
-        console.log("====aucun ticket disponible====");
-        console.log("===============================\n");
-    }
-    else{
-        for(let i = 0 ;i < ticket.length;i++)
-            Afficher_un_ticket(ticket ,i)    
-    }
-    
-}
+// Annuler un ticket
 function Annuler_un_ticket(tick){
     let del_ti = {};
     if(tick.length <= 0 ){
@@ -379,6 +389,7 @@ function Annuler_un_ticket(tick){
         }
     }
 }
+//  Rechercher un ticket
 function Rechercher_un_ticket(tick){
     if(tick.length <= 0 ){
         console.log("===============================");
@@ -396,6 +407,7 @@ function Rechercher_un_ticket(tick){
     console.log("====={ticket n'existe pas}=====");
     console.log("===============================");
 }
+//  Filtrer les trajets
 function Filtrer_les_trajets(trip){
     let depar = add_name()
     console.log (depar)
@@ -404,11 +416,7 @@ function Filtrer_les_trajets(trip){
             console.log(trip[i].departure ," → ",trip[i].destination ,":", trip[i].price,"DH")            
     }
 }
-function swap(arr,i, j){
-    let a = arr[i];
-    arr[i] = arr[j];
-    arr[j] = a;
-}
+// Trier les trajets
 function Trier_les_trajets(traj){
     let teamp_trips = traj
     for (let j = 0 ;j < teamp_trips.length;j++){
@@ -418,12 +426,16 @@ function Trier_les_trajets(traj){
     }
     Afficher_les_tickets(teamp_trips);
 }
+// =======================================================================
+
+// Chiffre d'affaires total
 function affaires_total(tick){
     let = total = 0;
     for(let i = 0;i<tick.length;i++)
         total += tick[i].price
     console.log(total)
 }
+// Trajet le plus vendu
 function Trajet_le_plus_vendu(){
     if(tickets.length <= 0 ){
         console.log("===============================");
@@ -450,7 +462,7 @@ function Trajet_le_plus_vendu(){
     console.log(max.index)
     console.log(max.number ,"tickets vendus")
 }
-
+//  Menu principal
 function main() {
     let n;
     do {
