@@ -6,6 +6,24 @@ const del_tick = []
 
 const tickets = [];
 
+// const tickets = [
+//     { id: 101, tripId: 1, passenger: "Jean Dupont", date: "2024-01-15" },
+//     { id: 102, tripId: 1, passenger: "Marie Martin", date: "2024-01-15" },
+//     { id: 103, tripId: 1, passenger: "Pierre Bernard", date: "2024-01-16" },
+//     { id: 104, tripId: 1, passenger: "Sophie Petit", date: "2024-01-16" },
+//     { id: 105, tripId: 2, passenger: "Luc Durand", date: "2024-01-15" },
+//     { id: 106, tripId: 2, passenger: "Emma Moreau", date: "2024-01-17" },
+//     { id: 107, tripId: 3, passenger: "Thomas Laurent", date: "2024-01-15" },
+//     { id: 108, tripId: 3, passenger: "Julie Simon", date: "2024-01-18" },
+//     { id: 109, tripId: 3, passenger: "Nicolas Michel", date: "2024-01-18" },
+//     { id: 110, tripId: 3, passenger: "Camille Garcia", date: "2024-01-19" },
+//     { id: 111, tripId: 3, passenger: "Léa David", date: "2024-01-19" },
+//     { id: 112, tripId: 4, passenger: "Hugo Bertrand", date: "2024-01-15" },
+//     { id: 113, tripId: 5, passenger: "Chloé Roux", date: "2024-01-20" },
+//     { id: 114, tripId: 5, passenger: "Maxime Fournier", date: "2024-01-20" },
+//     { id: 115, tripId: 5, passenger: "Manon Girard", date: "2024-01-21" }
+// ];
+
 const trips = [
     {
         id: 1,
@@ -409,25 +427,24 @@ function Trajet_le_plus_vendu(){
         console.log("===============================");
         return
     }
-    let max = {};
+    let max = {
+        number : 0,
+        index : ''
+    };
     let counter = 0;
     for(let i = 0 ; i < trips.length ;i++){
         counter = 0;
         for(let j = 0;j < tickets.length;j++){
             if (trips[i].id == tickets[j].tripId)
                 counter++;
-        }
+        }        
         if (max.number < counter){
             max.number = counter 
-            max.index = trips[i].departure ,"→",trips[i].destination
-            console.log(trips[i].departure ,"→",trips[i].destination)
-            console.log(max.number = counter );
-            
+            max.index = (trips[i].departure + " → " + trips[i].destination)
         }
     }
     console.log(max.index)
-    console.log(max.number ," tickets vendus")
-
+    console.log(max.number ,"tickets vendus")
 }
 
 function main() {
@@ -484,7 +501,7 @@ function main() {
                 Trajet_le_plus_vendu()
                 break
             default:
-                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 9");
+                console.log("Votre reposne n'etait pas acceptable, Svp donne moi une valeur entre 1 et 10");
                 break;
         }
     } while (n!=0)
