@@ -368,26 +368,24 @@ function Annuler_un_ticket(tick){
         console.log("===============================");
         return
     }
-    for(;;){
-        let id_del = input_ticket_id()
-        for(let i = 0 ;i<tick.length;i++){
-            if (tick[i].id == id_del){
-                Afficher_un_ticket(tick,i);
-                del_ti.id = tick[i].tripId
-                del_ti.setplace = tick[i].seatNumber
-                del_tick.push(del_ti)
-                tick.splice(i, 1)
-                for(let j = 0 ;j < trips.length;j++){
-                    if(trips[j].id == del_ti.id)
-                        trips[j].availableSeats += 1
-                }
-                return
+    let id_del = input_ticket_id()
+    for(let i = 0 ;i < tick.length ; i++){
+        if (tick[i].id == id_del){
+            Afficher_un_ticket(tick,i);
+            del_ti.id = tick[i].tripId
+            del_ti.setplace = tick[i].seatNumber
+            del_tick.push(del_ti)
+            tick.splice(i, 1)
+            for(let j = 0 ;j < trips.length;j++){
+                if(trips[j].id == del_ti.id)
+                    trips[j].availableSeats += 1
             }
-        console.log("===============================");
-        console.log("====={ticket n'existe pas}=====");
-        console.log("===============================");
+            return
         }
     }
+    console.log("===============================");
+    console.log("====={ticket n'existe pas}=====");
+    console.log("===============================");
 }
 // 5 Rechercher un ticket
 function Rechercher_un_ticket(tick){
