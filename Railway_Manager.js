@@ -207,7 +207,7 @@ const trips = [
         availableSeats: 50
 
     }
-];
+]
 function del_tick_from_del_tick(set,id){
     for(let i = 0;i < del_tick.length;i++)
         if (del_tick[i].id == id && del_tick[i].setplace == set )
@@ -260,7 +260,7 @@ function git_seatNumber(obje,id){
     let seatNum = 0
     for(let i = 0 ; i < obje.length ; i++){
         if (obje[i].id == id){
-            seatNum = obje[i].availableSeats
+            seatNum = 50 - obje[i].availableSeats + 1
             obje[i].availableSeats -= 1
             return seatNum
         }
@@ -346,7 +346,7 @@ function Acheter_un_ticket(){
     obje.passengerName = name
     obje.tripId = id_t
     obje.trajet = add_Trajet(id_t)
-    if (check_del_seat(id_t) == true)
+    if (check_del_seat(id_t) === true)
         obje.seatNumber =  git_seatNumber(trips,id_t)
     else{
         obje.seatNumber = check_del_seat(id_t)
@@ -427,7 +427,6 @@ function Trier_les_trajets(traj){
     Afficher_les_tickets(teamp_trips);
 }
 // =======================================================================
-
 // Chiffre d'affaires total
 function affaires_total(tick){
     let = total = 0;
