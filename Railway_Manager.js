@@ -212,16 +212,15 @@ function del_tick_from_del_tick(set,id){
     for(let i = 0;i < del_tick.length;i++)
         if (del_tick[i].id == id && del_tick[i].setplace == set )
             del_tick.splice(i,1)
+    for(let j = 0 ; j < trips.length ; j++){
+        if(trips[j].id == id)
+            trips[j].availableSeats -= 1
+    }
 }
 function check_del_seat(id){
     for(let i = 0;i < del_tick.length;i++)
-        if (del_tick[i].id == id){
-            for(let j = 0 ; j < trips.length ; j++){
-                if(trips[j].id == id)
-                    trips[j].availableSeats += 1
-            }
+        if (del_tick[i].id == id)
             return del_tick[i].setplace
-        }
     return true
 }
 function add_name(){
@@ -345,8 +344,11 @@ function Afficher_les_tickets(ticket){
         console.log("====aucun ticket disponible====");
         console.log("===============================\n");
     }
-    for(let i = 0 ;i < ticket.length;i++)
-        Afficher_un_ticket(ticket ,i)
+    else{
+        for(let i = 0 ;i < ticket.length;i++)
+            Afficher_un_ticket(ticket ,i)    
+    }
+    
 }
 function Annuler_un_ticket(tick){
     let del_ti = {};
@@ -408,11 +410,13 @@ function swap(arr,i, j){
     arr[j] = a;
 }
 function Trier_les_trajets(traj){
-    for (let j = 0 ;j < traj.length;j++){
-        for(let i = 0 ;i < traj.length - 1 ;i++)
-            if (traj[i].price > traj[i + 1].price)
-                swap(traj ,i ,i + 1)
+    let teamp_trips = traj
+    for (let j = 0 ;j < teamp_trips.length;j++){
+        for(let i = 0 ;i < teamp_trips.length - 1 ;i++)
+            if (teamp_trips[i].price > teamp_trips[i + 1].price)
+                swap(teamp_trips ,i ,i + 1)
     }
+    Afficher_les_tickets(teamp_trips);
 }
 function affaires_total(tick){
     let = total = 0;
@@ -463,11 +467,12 @@ function main() {
         console.log("8. Nombre total de tickets vendus");
         console.log("9. Chiffre d'affaires total");
         console.log("10. Trajet le plus vendu");
-
         console.log("0. Quitter");
         console.log("===============================");
 
         n = Number(prompt("Votre choix :"))
+        if (n == 0)
+            return console.log("\n===============================\n==========={Quitter}===========\n===============================")
         switch (n) {
             case 1:
                 Afficher_les_trajets(trips)
