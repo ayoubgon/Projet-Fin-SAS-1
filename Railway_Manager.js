@@ -417,14 +417,14 @@ function Filtrer_les_trajets(trip){
     }
 }
 // Trier les trajets
-function Trier_les_trajets(traj){
-    let teamp_trips = traj
+function Trier_les_trajets(){
+    let teamp_trips = [...trips]
     for (let j = 0 ;j < teamp_trips.length;j++){
         for(let i = 0 ;i < teamp_trips.length - 1 ;i++)
             if (teamp_trips[i].price > teamp_trips[i + 1].price)
                 swap(teamp_trips ,i ,i + 1)
     }
-    Afficher_les_tickets(teamp_trips);
+    Afficher_les_trajets(teamp_trips);
 }
 // =======================================================================
 // Chiffre d'affaires total
@@ -504,8 +504,7 @@ function main() {
                 Filtrer_les_trajets(trips)
                 break;
             case 7:
-                Trier_les_trajets(trips)
-                Afficher_les_trajets(trips)
+                Trier_les_trajets()
                 break;
             case 8:
                 console.log(tickets.length)
