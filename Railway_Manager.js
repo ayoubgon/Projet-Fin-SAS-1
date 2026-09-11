@@ -289,17 +289,14 @@ function add_Trajet(id){
             return trips[i].departure + " → " + trips[i].destination
         }
 }
-function Afficher_les_tickets(ticket){
-    if (ticket.length == 0){
-        console.log("\n===============================");
-        console.log("====aucun ticket disponible====");
-        console.log("===============================\n");
-    }
-    else{
-        for(let i = 0 ;i < ticket.length;i++)
-            Afficher_un_ticket(ticket ,i)    
-    }
-    
+function Afficher_un_ticket(ticket ,i_of_tick){
+    console.log("===============================");
+    console.log("Ticket #",ticket[i_of_tick].id);
+    console.log("Passager : ",ticket[i_of_tick].passengerName);
+    console.log("Trajet :",ticket[i_of_tick].trajet);
+    console.log("Place : ",ticket[i_of_tick].seatNumber);
+    console.log("Prix : ",ticket[i_of_tick].price);
+    console.log("===============================");
 }
 function swap(arr,i, j){
     let a = arr[i];
@@ -307,7 +304,7 @@ function swap(arr,i, j){
     arr[j] = a;
 }
 // =======================================================================
-// Afficher les trajets
+// 1 Afficher les trajets
 function Afficher_les_trajets(obje){
     console.log("=== TRAJETS DISPONIBLES ===");
     for(let i = 0 ;i < obje.length ;i++){
@@ -319,17 +316,7 @@ function Afficher_les_trajets(obje){
         console.log("==========================");
     }
 }
-// Afficher les tickets
-function Afficher_un_ticket(ticket ,i_of_tick){
-    console.log("===============================");
-    console.log("Ticket #",ticket[i_of_tick].id);
-    console.log("Passager : ",ticket[i_of_tick].passengerName);
-    console.log("Trajet :",ticket[i_of_tick].trajet);
-    console.log("Place : ",ticket[i_of_tick].seatNumber);
-    console.log("Prix : ",ticket[i_of_tick].price);
-    console.log("===============================");
-}
-// Acheter un ticket
+// 2 Acheter un ticket
 function Acheter_un_ticket(){
     let obje = {};
     let name;
@@ -359,7 +346,20 @@ function Acheter_un_ticket(){
     console.log("===============================\n");
     Afficher_un_ticket(tickets , tickets.length - 1)
 }
-// Annuler un ticket
+// 3 Afficher les tickets
+function Afficher_les_tickets(ticket){
+    if (ticket.length == 0){
+        console.log("\n===============================");
+        console.log("====aucun ticket disponible====");
+        console.log("===============================\n");
+    }
+    else{
+        for(let i = 0 ;i < ticket.length;i++)
+            Afficher_un_ticket(ticket ,i)    
+    }
+    
+}
+// 4 Annuler un ticket
 function Annuler_un_ticket(tick){
     let del_ti = {};
     if(tick.length <= 0 ){
@@ -389,7 +389,7 @@ function Annuler_un_ticket(tick){
         }
     }
 }
-//  Rechercher un ticket
+// 5 Rechercher un ticket
 function Rechercher_un_ticket(tick){
     if(tick.length <= 0 ){
         console.log("===============================");
@@ -407,7 +407,7 @@ function Rechercher_un_ticket(tick){
     console.log("====={ticket n'existe pas}=====");
     console.log("===============================");
 }
-//  Filtrer les trajets
+// 6 Filtrer les trajets
 function Filtrer_les_trajets(trip){
     let depar = add_name()
     console.log (depar)
@@ -416,7 +416,7 @@ function Filtrer_les_trajets(trip){
             console.log(trip[i].departure ," → ",trip[i].destination ,":", trip[i].price,"DH")            
     }
 }
-// Trier les trajets
+// 7 Trier les trajets
 function Trier_les_trajets(){
     let teamp_trips = [...trips]
     for (let j = 0 ;j < teamp_trips.length;j++){
@@ -427,14 +427,14 @@ function Trier_les_trajets(){
     Afficher_les_trajets(teamp_trips);
 }
 // =======================================================================
-// Chiffre d'affaires total
+// 9 Chiffre d'affaires total
 function affaires_total(tick){
     let = total = 0;
     for(let i = 0;i<tick.length;i++)
         total += tick[i].price
     console.log(total)
 }
-// Trajet le plus vendu
+// 10 Trajet le plus vendu
 function Trajet_le_plus_vendu(){
     if(tickets.length <= 0 ){
         console.log("===============================");
